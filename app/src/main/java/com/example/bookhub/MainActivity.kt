@@ -3,7 +3,7 @@ package com.example.bookhub
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
-import android.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         coordinatorLayout = findViewById(R.id.coordinatorLayout)
         frameLayout = findViewById(R.id.coordinatorLayout)
-        navigationView = findViewById(R.id.navigationView)
+        navigationView = findViewById(R.id.navigationView )
         setToolbar()
 
         val actionBarDrawerToggle = ActionBarDrawerToggle(this@MainActivity
