@@ -2,10 +2,13 @@ package com.example.bookhub
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout
 import com.google.android.material.navigation.NavigationView
@@ -38,6 +41,35 @@ class MainActivity : AppCompatActivity() {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+
+        navigationView.setNavigationItemSelectedListener {
+
+            when(it.itemId){
+                R.id.dashboard -> {
+                    //Toast.makeText(this@MainActivity,"clicked on dashboard",Toast.LENGTH_SHORT).show()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,DashboardFragment()).addToBackStack("dashboard").commit()
+                    drawerLayout.closeDrawers()
+                }
+                R.id.favorites -> {
+                    //Toast.makeText(this@MainActivity,"clicked on favorites",Toast.LENGTH_SHORT).show()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,FavoritesFragment()).addToBackStack("favorites").commit()
+                    drawerLayout.closeDrawers()
+                }
+                R.id.profile -> {
+                    //Toast.makeText(this@MainActivity,"clicked on profile",Toast.LENGTH_SHORT).show()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,ProfileFragment()).addToBackStack("profile").commit()
+                    drawerLayout.closeDrawers()
+                }
+                R.id.aboutApp -> {
+                    //Toast.makeText(this@MainActivity,"clicked on About App",Toast.LENGTH_SHORT).show()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,AboutAppFragment()).addToBackStack("about app").commit()
+                    drawerLayout.closeDrawers()
+                }
+            }
+
+            return@setNavigationItemSelectedListener true
+        }
+
     }
 
     private fun setToolbar() {
@@ -48,6 +80,16 @@ class MainActivity : AppCompatActivity() {
         */
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+
+        if (id == android.R.id.home){
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 }

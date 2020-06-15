@@ -7,4 +7,10 @@
     <string name="navigation_drawer">Navigation Drawer</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="favorites_fragment">Favorites Fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="profile_fragment">Profile Fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="about_app_fragment">About App Fragment</string>
 </resources>
