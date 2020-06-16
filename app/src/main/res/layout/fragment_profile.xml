@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:background="#2E9AFE">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -14,5 +15,130 @@
         android:textSize="20sp"
         android:padding="10dp"
     />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtProfile"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/name"
+        android:textSize="30sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtProfile"
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@+id/txtName"
+        android:background="#ffffff"
+        android:hint="enter name"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtEmailID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtName"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/email"
+        android:textSize="30sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/etEmailID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etName"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/txtEmailID"
+        android:background="#ffffff"
+        android:hint="enter email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtMobileNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtEmailID"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/mobilenumber"
+        android:textSize="30sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/etMobileNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etEmailID"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/txtMobileNumber"
+        android:background="#ffffff"
+        android:hint="enter mobile no"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/txtAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtMobileNumber"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/address"
+        android:textSize="30sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/etAddr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etMobileNumber"
+        android:layout_marginLeft="31dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/txtAddr"
+        android:background="#ffffff"
+        android:hint="enter address"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
+
+        />
 
 </RelativeLayout>

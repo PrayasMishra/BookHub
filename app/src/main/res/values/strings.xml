@@ -13,4 +13,9 @@
     <string name="profile_fragment">Profile Fragment</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="about_app_fragment">About App Fragment</string>
+    <string name="dashboard_fragment">Dashboard Fragment</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="mobilenumber">Mobile No</string>
+    <string name="address">Address</string>
 </resources>
