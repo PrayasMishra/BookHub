@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var coordinatorLayout: CoordinatorLayout
     private lateinit var frameLayout: FrameLayout
     private lateinit var navigationView : NavigationView
+    var prevMenuItem : MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigationView )
         setToolbar()
 
+        openDashboard()
+
         val actionBarDrawerToggle = ActionBarDrawerToggle(this@MainActivity
             ,drawerLayout
             ,R.string.open_drawer
@@ -44,25 +47,36 @@ class MainActivity : AppCompatActivity() {
 
         navigationView.setNavigationItemSelectedListener {
 
+            if (prevMenuItem != null){
+                prevMenuItem?.isChecked = false
+            }
+
+            it.isCheckable = true
+            it.isChecked = true
+            prevMenuItem = it
+
             when(it.itemId){
                 R.id.dashboard -> {
                     //Toast.makeText(this@MainActivity,"clicked on dashboard",Toast.LENGTH_SHORT).show()
-                    supportFragmentManager.beginTransaction().replace(R.id.frame,DashboardFragment()).addToBackStack("dashboard").commit()
+                    openDashboard()
                     drawerLayout.closeDrawers()
                 }
                 R.id.favorites -> {
                     //Toast.makeText(this@MainActivity,"clicked on favorites",Toast.LENGTH_SHORT).show()
-                    supportFragmentManager.beginTransaction().replace(R.id.frame,FavoritesFragment()).addToBackStack("favorites").commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,FavoritesFragment()).commit()
+                    supportActionBar?.title = "Favorites"
                     drawerLayout.closeDrawers()
                 }
                 R.id.profile -> {
                     //Toast.makeText(this@MainActivity,"clicked on profile",Toast.LENGTH_SHORT).show()
-                    supportFragmentManager.beginTransaction().replace(R.id.frame,ProfileFragment()).addToBackStack("profile").commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,ProfileFragment()).commit()
+                    supportActionBar?.title = "Profile"
                     drawerLayout.closeDrawers()
                 }
                 R.id.aboutApp -> {
                     //Toast.makeText(this@MainActivity,"clicked on About App",Toast.LENGTH_SHORT).show()
-                    supportFragmentManager.beginTransaction().replace(R.id.frame,AboutAppFragment()).addToBackStack("about app").commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,AboutAppFragment()).commit()
+                    supportActionBar?.title = "About App"
                     drawerLayout.closeDrawers()
                 }
             }
@@ -90,6 +104,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun openDashboard(){
+        supportFragmentManager.beginTransaction().replace(R.id.frame,DashboardFragment()).addToBackStack("dashboard").commit()
+        supportActionBar?.title = "Dashboard"
+        navigationView.setCheckedItem(R.id.dashboard)
+    }
+
+    override fun onBackPressed() {
+        val frag = supportFragmentManager.findFragmentById(R.id.frame)
+
+        when(frag){
+            !is DashboardFragment -> openDashboard()
+            else -> super.onBackPressed()
+        }
+
     }
 
 }
