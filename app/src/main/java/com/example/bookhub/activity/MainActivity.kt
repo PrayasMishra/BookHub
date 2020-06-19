@@ -1,18 +1,20 @@
-package com.example.bookhub
+package com.example.bookhub.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout
+import com.example.bookhub.*
+import com.example.bookhub.fragment.AboutAppFragment
+import com.example.bookhub.fragment.DashboardFragment
+import com.example.bookhub.fragment.FavoritesFragment
+import com.example.bookhub.fragment.ProfileFragment
 import com.google.android.material.navigation.NavigationView
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,16 +32,16 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawerLayout)
         toolbar = findViewById(R.id.toolbar)
         coordinatorLayout = findViewById(R.id.coordinatorLayout)
-        frameLayout = findViewById(R.id.coordinatorLayout)
-        navigationView = findViewById(R.id.navigationView )
+        frameLayout = findViewById(R.id.frame)
+        navigationView = findViewById(R.id.navigationView)
         setToolbar()
 
         openDashboard()
 
         val actionBarDrawerToggle = ActionBarDrawerToggle(this@MainActivity
             ,drawerLayout
-            ,R.string.open_drawer
-            ,R.string.close_drawer
+            , R.string.open_drawer
+            , R.string.close_drawer
         )
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
@@ -63,19 +65,28 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.favorites -> {
                     //Toast.makeText(this@MainActivity,"clicked on favorites",Toast.LENGTH_SHORT).show()
-                    supportFragmentManager.beginTransaction().replace(R.id.frame,FavoritesFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frame,
+                        FavoritesFragment()
+                    ).commit()
                     supportActionBar?.title = "Favorites"
                     drawerLayout.closeDrawers()
                 }
                 R.id.profile -> {
                     //Toast.makeText(this@MainActivity,"clicked on profile",Toast.LENGTH_SHORT).show()
-                    supportFragmentManager.beginTransaction().replace(R.id.frame,ProfileFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frame,
+                        ProfileFragment()
+                    ).commit()
                     supportActionBar?.title = "Profile"
                     drawerLayout.closeDrawers()
                 }
                 R.id.aboutApp -> {
                     //Toast.makeText(this@MainActivity,"clicked on About App",Toast.LENGTH_SHORT).show()
-                    supportFragmentManager.beginTransaction().replace(R.id.frame,AboutAppFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frame,
+                        AboutAppFragment()
+                    ).commit()
                     supportActionBar?.title = "About App"
                     drawerLayout.closeDrawers()
                 }
@@ -107,7 +118,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDashboard(){
-        supportFragmentManager.beginTransaction().replace(R.id.frame,DashboardFragment()).addToBackStack("dashboard").commit()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.frame,
+            DashboardFragment()
+        ).addToBackStack("dashboard").commit()
         supportActionBar?.title = "Dashboard"
         navigationView.setCheckedItem(R.id.dashboard)
     }
