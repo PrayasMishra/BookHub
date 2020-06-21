@@ -18,4 +18,6 @@
     <string name="email">Email</string>
     <string name="mobilenumber">Mobile No</string>
     <string name="address">Address</string>
+    <string name="check_internet">Check Internet</string>
+    <string name="hello_blank_fragment">hello blank fragment</string>
 </resources>
