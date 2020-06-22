@@ -78,7 +78,7 @@ class DescriptionActivity : AppCompatActivity() {
                     txtBookPrice.text = bookJsonObject.getString("price")
                     txtBookRatings.text = bookJsonObject.getString("rating")
                     txtBookDesc.text = bookJsonObject.getString("description")
-                    Picasso.get().load(bookJsonObject.getString("image"))
+                    Picasso.get().load(bookJsonObject.getString("image")).error(R.drawable.default_book_cover).into(imgBookImage)
                 }else{
                     Toast.makeText(this@DescriptionActivity, "Some error occurred!!!", Toast.LENGTH_SHORT).show()
                 }
@@ -97,6 +97,6 @@ class DescriptionActivity : AppCompatActivity() {
                 return headers
             }
         }
-
+        queue.add(jsonRequest)
     }
 }
