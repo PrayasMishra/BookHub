@@ -160,6 +160,7 @@ class DashboardFragment : Fragment() {
                 }
             }
             queue.add(jsonObjectRequest)
+
         }else{
             val dialog = AlertDialog.Builder(activity as Context)
             dialog.setTitle("error")
