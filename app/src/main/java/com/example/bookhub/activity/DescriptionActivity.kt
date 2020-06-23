@@ -1,9 +1,9 @@
 package com.example.bookhub.activity
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -11,11 +11,15 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.bookhub.R
+import com.example.bookhub.database.BookDatabase
+import com.example.bookhub.database.BookEntity
 import com.example.bookhub.util.ConnectionManager
 import com.squareup.picasso.Picasso
 import org.json.JSONException
@@ -86,12 +90,59 @@ class DescriptionActivity : AppCompatActivity() {
                         progressLayout.visibility = View.GONE
                         progressBar.visibility = View.GONE
 
+                        val bookImageURL = bookJsonObject.getString("image")
+
                         txtBookName.text = bookJsonObject.getString("name")
                         txtBookAuthor.text = bookJsonObject.getString("author")
                         txtBookPrice.text = bookJsonObject.getString("price")
                         txtBookRatings.text = bookJsonObject.getString("rating")
                         txtBookDesc.text = bookJsonObject.getString("description")
                         Picasso.get().load(bookJsonObject.getString("image")).error(R.drawable.default_book_cover).into(imgBookImage)
+
+                        val bookEntity = BookEntity(
+                            bookId?.toInt() as Int,
+                            txtBookName.text.toString(),
+                            txtBookAuthor.text.toString(),
+                            txtBookPrice.text.toString(),
+                            txtBookRatings.text.toString(),
+                            txtBookDesc.text.toString(),
+                            bookImageURL
+                        )
+
+                        val checkFav = DBAsyncTask(applicationContext, bookEntity, 1).execute()
+                        val isFav = checkFav.get()
+
+                        if (isFav){
+                            btnAddToFavorites.text = getString(R.string.remove_from_favorites)
+                            btnAddToFavorites.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorFavorite))
+                        }else{
+                            btnAddToFavorites.text = getString(R.string.add_to_favorites)
+                            btnAddToFavorites.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorPrimaryDark))
+                        }
+
+                        btnAddToFavorites.setOnClickListener {
+                            if (!isFav){
+                                val result = DBAsyncTask(applicationContext, bookEntity, 2).execute().get()
+                                if (result){
+                                    Toast.makeText(this@DescriptionActivity, "book added to favorites", Toast.LENGTH_SHORT).show()
+                                    btnAddToFavorites.text = getString(R.string.remove_from_favorites)
+                                    btnAddToFavorites.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorFavorite))
+                                }else{
+                                    Toast.makeText(this@DescriptionActivity, "Some error has occurred", Toast.LENGTH_SHORT).show()
+                                }
+
+                            }else{
+                                val result = DBAsyncTask(applicationContext, bookEntity, 3).execute().get()
+                                if (result){
+                                    Toast.makeText(this@DescriptionActivity, "book removed from favorites", Toast.LENGTH_SHORT).show()
+                                    btnAddToFavorites.text = getString(R.string.add_to_favorites)
+                                    btnAddToFavorites.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorPrimaryDark))
+                                }else{
+                                    Toast.makeText(this@DescriptionActivity, "Some error has occurred", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+
                     }else{
                         Toast.makeText(this@DescriptionActivity, "Some error occurred!!!", Toast.LENGTH_SHORT).show()
                     }
@@ -128,6 +179,41 @@ class DescriptionActivity : AppCompatActivity() {
             }
             dialog.create()
             dialog.show()
+        }
+
+    }
+
+    class DBAsyncTask(val context : Context, val bookEntity: BookEntity, val mode : Int) : AsyncTask<Void, Void, Boolean>(){
+        /*mode 1 -> check DB if book is favorite or not
+        * mode 2 -> save the book into DB as favorite
+        * mode 3 -> remove the favorite book
+        * */
+        val db = Room.databaseBuilder(context, BookDatabase::class.java, "books-db").build()
+
+        override fun doInBackground(vararg p0: Void?): Boolean {
+            when(mode){
+                1 -> {
+                    //check DB if book is favorite or not
+                    val book : BookEntity? = db.bookDao().getBookById(bookEntity.book_id.toString())
+                    db.close()
+                    return (book != null)
+                }
+
+                2 -> {
+                    //save the book into DB as favorite
+                    db.bookDao().insertBook(bookEntity)
+                    db.close()
+                    return true
+                }
+
+                3 -> {
+                    //remove the favorite book
+                    db.bookDao().deleteBook(bookEntity)
+                    db.close()
+                    return true
+                }
+            }
+            return false
         }
 
     }
